@@ -32,13 +32,19 @@ export class WebGLEngine {
         this.setupMatrices();
     }
 
-    async loadModels ( models ) {
+    async loadModels ( models, textures ) {
         for ( let i = 0; i < models.length; i++ ) {
             const modelRaw = fetch ( models[i] );
             const modelJSON = (await modelRaw).json();
             const model = new Model ( this.gl, this.program, await modelJSON );
+            model.loadTexture ( textures[i] );
             this.models.push ( model );
         }
+        
+            // Setting up texture parameters.
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.LINEAR);
     }
 
     setupMatrices () {

@@ -5,6 +5,6 @@ document.body.onload = async () => {
     const engine = new WebGLEngine ( canvas );
 
     await engine.initShader("./shaders/shader.vs.glsl", "./shaders/shader.fs.glsl");
-    await engine.loadModels ( ["./assets/models/cube.json"] );
+    await engine.loadModels ( ["./assets/models/cube.json"], ["./assets/textures/cube-texture.jpg"] );
     engine.start();
 }
